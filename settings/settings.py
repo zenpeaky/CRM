@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     'dj_rest_auth',
     'dj_rest_auth.registration',
 
@@ -128,6 +130,24 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': env('GOOGLE_CLIENT_ID'),
+            'secret': env('GOOGLE_CLIENT_SECRET'),
+            'key': env('GOOGLE_KEY')
+        },
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'offline',
+        },
+        'OAUTH_PKCE_ENABLED': True,
+    }
+}
+
 # email
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -137,7 +157,7 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = env('EMAILUSER')
 EMAIL_HOST_PASSWORD = env('EMAILPASS')
 
-ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+# ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
