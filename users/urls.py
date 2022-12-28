@@ -1,7 +1,7 @@
 from django.urls import path, re_path
 from dj_rest_auth.registration.views import RegisterView, VerifyEmailView, ConfirmEmailView
 from dj_rest_auth.views import LoginView, LogoutView
-from .views import GoogleLogin
+from .views import GoogleLogin, google_callback
 
 urlpatterns = [
     path('account-confirm-email/<str:key>/', ConfirmEmailView.as_view()),
@@ -9,6 +9,7 @@ urlpatterns = [
     path('login/', LoginView.as_view()),
     path('logout/', LogoutView.as_view()),
     path('google/', GoogleLogin.as_view(), name='google_login'),
+    path('google/login/callback/', google_callback, name='google_callback'),
 
     path('verify-email/',
         VerifyEmailView.as_view(), name='rest_verify_email'),
